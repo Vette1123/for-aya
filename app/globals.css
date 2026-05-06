@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --bg: #1a0612;
+  --bg: #2e0c1f;
   --rose-deep: #8B1E3F;
   --rose-warm: #C73E5A;
   --rose-soft: #E8A0A8;
@@ -33,10 +33,15 @@ body::after {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(199, 62, 90, 0.35), transparent 60%),
-    radial-gradient(ellipse 60% 50% at 100% 80%, rgba(212, 162, 76, 0.18), transparent 60%),
-    radial-gradient(ellipse 70% 55% at 0% 100%, rgba(139, 30, 63, 0.4), transparent 60%),
-    linear-gradient(180deg, #1a0612 0%, #2a0e1a 50%, #1a0612 100%);
+    linear-gradient(
+      180deg,
+      #4a1530 0%,
+      #6b1d3e 22%,
+      #82254a 45%,
+      #631c3c 68%,
+      #3e1228 88%,
+      #260a1a 100%
+    );
 }
 
 /* Subtle film grain */
