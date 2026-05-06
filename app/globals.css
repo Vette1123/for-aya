@@ -79,6 +79,12 @@ body::after {
   .shimmer-text { animation: none; }
 }
 
+/* On touch devices keep the background static — avoids repaint jank
+   and any perceived "interruption" while reading or scrolling. */
+@media (pointer: coarse) {
+  body::after { animation: none; }
+}
+
 /* Subtle film grain */
 body::before {
   content: "";
@@ -146,21 +152,21 @@ body::before {
   user-select: none;
 }
 
-/* Heart pattern background — breathing drift + mouse parallax */
-@keyframes heart-pattern-drift {
+/* Heart pattern background — soft in-place pulse, no movement */
+@keyframes heart-pattern-pulse {
   0%, 100% {
-    opacity: 0.06;
-    transform: translate3d(var(--hp-x, 0px), var(--hp-y, 0px), 0) scale(1);
+    opacity: 0.07;
+    transform: scale(1);
   }
   50% {
-    opacity: 0.14;
-    transform: translate3d(calc(var(--hp-x, 0px) - 22px), calc(var(--hp-y, 0px) - 14px), 0) scale(1.04);
+    opacity: 0.11;
+    transform: scale(1.012);
   }
 }
 .heart-pattern-anim {
-  animation: heart-pattern-drift 9s ease-in-out infinite;
-  will-change: opacity, transform;
-  transition: transform 0.6s ease-out;
+  transform-origin: center;
+  animation: heart-pattern-pulse 6s ease-in-out infinite;
+  transition: opacity 800ms ease-out;
 }
 @media (prefers-reduced-motion: reduce) {
   .heart-pattern-anim { animation: none; }

@@ -1,43 +1,6 @@
-"use client";
-
-import { useEffect, useRef } from "react";
-
 export default function HeartPattern() {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (typeof window === "undefined") return;
-    if (window.matchMedia("(pointer: coarse)").matches) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    let raf = 0;
-    let tx = 0;
-    let ty = 0;
-    const onMove = (e: MouseEvent) => {
-      const nx = (e.clientX / window.innerWidth - 0.5) * 24;
-      const ny = (e.clientY / window.innerHeight - 0.5) * 18;
-      tx = nx;
-      ty = ny;
-      if (!raf) {
-        raf = requestAnimationFrame(() => {
-          el.style.setProperty("--hp-x", `${tx}px`);
-          el.style.setProperty("--hp-y", `${ty}px`);
-          raf = 0;
-        });
-      }
-    };
-    window.addEventListener("mousemove", onMove, { passive: true });
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, []);
-
   return (
     <div
-      ref={ref}
       aria-hidden="true"
       className="fixed inset-0 pointer-events-none z-0 heart-pattern-anim"
       style={{ mixBlendMode: "screen" }}
