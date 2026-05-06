@@ -25,23 +25,56 @@ body {
 
 /* Fixed gradient layer — avoids `background-attachment: fixed`,
    which on mobile (iOS Safari, Chrome) leaves black bands when the
-   URL bar collapses during scroll. */
+   URL bar collapses during scroll.
+   Layered: warm radial glows over a deep vertical rose gradient. */
 body::after {
   content: "";
   position: fixed;
-  inset: 0;
+  inset: -10%;
   z-index: -1;
   pointer-events: none;
   background:
+    radial-gradient(ellipse 60% 50% at 15% 10%, rgba(212, 162, 76, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 55% at 85% 25%, rgba(199, 62, 90, 0.28) 0%, transparent 65%),
+    radial-gradient(ellipse 80% 60% at 50% 55%, rgba(232, 160, 168, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 65% 50% at 10% 85%, rgba(139, 30, 63, 0.35) 0%, transparent 65%),
+    radial-gradient(ellipse 70% 55% at 90% 95%, rgba(212, 162, 76, 0.10) 0%, transparent 70%),
     linear-gradient(
-      180deg,
+      165deg,
       #4a1530 0%,
-      #6b1d3e 22%,
-      #82254a 45%,
-      #631c3c 68%,
-      #3e1228 88%,
-      #260a1a 100%
+      #6b1d3e 18%,
+      #8a274f 38%,
+      #6e1f40 58%,
+      #4a1430 78%,
+      #2a0d1c 100%
     );
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  animation: bg-drift 22s ease-in-out infinite alternate;
+}
+
+@keyframes bg-drift {
+  0% {
+    background-position:
+      0% 0%,
+      100% 0%,
+      50% 50%,
+      0% 100%,
+      100% 100%,
+      0% 0%;
+  }
+  100% {
+    background-position:
+      10% 8%,
+      88% 14%,
+      55% 45%,
+      8% 92%,
+      92% 88%,
+      0% 0%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after { animation: none; }
 }
 
 /* Subtle film grain */

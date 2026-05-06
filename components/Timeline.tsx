@@ -116,10 +116,10 @@ export default function Timeline() {
                     <p className="text-cream/70 leading-loose text-[15px] font-light">
                       {m.text}
                     </p>
-                    <div className={`mt-4 pt-4 border-t border-gold/10 text-xs tracking-[0.2em] text-gold/60 font-display flex items-center gap-3 ${onRight ? "md:justify-start" : "md:justify-end"} justify-center`}>
-                      <span>{m.date}</span>
-                      <span className="text-gold/30">·</span>
-                      <span dir="rtl">{m.dateAr}</span>
+                    <div className={`mt-4 pt-4 border-t border-gold/10 text-xs tracking-[0.2em] text-gold/70 font-display flex items-center gap-2 ${onRight ? "md:justify-start" : "md:justify-end"} justify-center`}>
+                      <span className="leading-none">{m.date}</span>
+                      <span className="text-gold/60 text-base leading-none font-light relative -top-px" aria-hidden="true">—</span>
+                      <span dir="rtl" className="leading-none">{m.dateAr}</span>
                     </div>
                   </motion.div>
                 </div>
