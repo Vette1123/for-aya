@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 
 interface Moment {
   date: string;
+  dateAr: string;
   day: string;
   month: string;
   year: string;
@@ -15,6 +16,7 @@ interface Moment {
 const moments: Moment[] = [
   {
     date: "23/04/2026",
+    dateAr: "٢٣ / ٠٤ / ٢٠٢٦",
     day: "٢٣",
     month: "أبريل",
     year: "٢٠٢٦",
@@ -23,6 +25,7 @@ const moments: Moment[] = [
   },
   {
     date: "02/05/2026",
+    dateAr: "٠٢ / ٠٥ / ٢٠٢٦",
     day: "٠٢",
     month: "مايو",
     year: "٢٠٢٦",
@@ -31,6 +34,7 @@ const moments: Moment[] = [
   },
   {
     date: "10/05/2026",
+    dateAr: "١٠ / ٠٥ / ٢٠٢٦",
     day: "١٠",
     month: "مايو",
     year: "٢٠٢٦",
@@ -39,6 +43,7 @@ const moments: Moment[] = [
   },
   {
     date: "?",
+    dateAr: "؟",
     day: "؟",
     month: "قريبًا",
     year: "بإذن الله",
@@ -111,8 +116,10 @@ export default function Timeline() {
                     <p className="text-cream/70 leading-loose text-[15px] font-light">
                       {m.text}
                     </p>
-                    <div className="mt-4 pt-4 border-t border-gold/10 text-xs tracking-[0.2em] text-gold/60 font-display">
-                      {m.date}
+                    <div className={`mt-4 pt-4 border-t border-gold/10 text-xs tracking-[0.2em] text-gold/60 font-display flex items-center gap-3 ${onRight ? "md:justify-start" : "md:justify-end"} justify-center`}>
+                      <span>{m.date}</span>
+                      <span className="text-gold/30">·</span>
+                      <span dir="rtl">{m.dateAr}</span>
                     </div>
                   </motion.div>
                 </div>
