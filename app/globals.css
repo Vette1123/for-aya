@@ -146,6 +146,26 @@ body::before {
   user-select: none;
 }
 
+/* Heart pattern background — breathing drift + mouse parallax */
+@keyframes heart-pattern-drift {
+  0%, 100% {
+    opacity: 0.06;
+    transform: translate3d(var(--hp-x, 0px), var(--hp-y, 0px), 0) scale(1);
+  }
+  50% {
+    opacity: 0.14;
+    transform: translate3d(calc(var(--hp-x, 0px) - 22px), calc(var(--hp-y, 0px) - 14px), 0) scale(1.04);
+  }
+}
+.heart-pattern-anim {
+  animation: heart-pattern-drift 9s ease-in-out infinite;
+  will-change: opacity, transform;
+  transition: transform 0.6s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .heart-pattern-anim { animation: none; }
+}
+
 /* Drop cap for prose */
 .drop-cap::first-letter {
   font-family: var(--font-display, serif);

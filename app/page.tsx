@@ -5,10 +5,12 @@ import Timeline from "@/components/Timeline";
 import HeartGame from "@/components/HeartGame";
 import Footer from "@/components/Footer";
 import ClientFx from "@/components/ClientFx";
+import HeartPattern from "@/components/HeartPattern";
 
 export default function Page() {
   return (
     <main className="relative">
+      <HeartPattern />
       <ClientFx />
       <div className="relative z-10">
         <Hero />
