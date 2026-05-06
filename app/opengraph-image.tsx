@@ -5,8 +5,14 @@ export const contentType = "image/png";
 export const alt = "إلى آية ❤";
 
 async function loadFont(weight: 400 | 700) {
-  const url = `https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@${weight}&display=swap`;
-  const css = await (await fetch(url)).text();
+  const url = `https://fonts.googleapis.com/css2?family=Cairo:wght@${weight}&display=swap`;
+  const css = await (await fetch(url, {
+    headers: {
+      // Force a TTF response so satori's opentype parser handles it
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko)",
+    },
+  })).text();
   const match = css.match(/src: url\((.+?)\) format\('(opentype|truetype)'\)/);
   if (!match) throw new Error("Font URL not found");
   const fontRes = await fetch(match[1]);
@@ -29,7 +35,7 @@ export default async function OG() {
           background:
             "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(199, 62, 90, 0.55), transparent 60%), radial-gradient(ellipse 70% 55% at 0% 100%, rgba(139, 30, 63, 0.6), transparent 60%), linear-gradient(180deg, #1a0612 0%, #2a0e1a 50%, #1a0612 100%)",
           color: "#FBF3E4",
-          fontFamily: "Reem Kufi",
+          fontFamily: "Cairo",
           padding: 80,
           textAlign: "center",
         }}
@@ -79,8 +85,8 @@ export default async function OG() {
     {
       ...size,
       fonts: [
-        { name: "Reem Kufi", data: regular, weight: 400, style: "normal" },
-        { name: "Reem Kufi", data: bold, weight: 700, style: "normal" },
+        { name: "Cairo", data: regular, weight: 400, style: "normal" },
+        { name: "Cairo", data: bold, weight: 700, style: "normal" },
       ],
     },
   );
