@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Amiri, Tajawal, Reem_Kufi } from "next/font/google";
 import "./globals.css";
 
@@ -21,9 +21,27 @@ const hand = Amiri({
   variable: "--font-hand",
 });
 
+const SITE_TITLE = "إلى آية ❤";
+const SITE_DESCRIPTION = "رسالة حب صغيرة، صُنعت لكِ وحدكِ";
+
 export const metadata: Metadata = {
-  title: "إلى آية ❤",
-  description: "رسالة حب صغيرة، صُنعت لكِ وحدكِ",
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    type: "website",
+    locale: "ar_AR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#1a0612",
 };
 
 export default function RootLayout({
