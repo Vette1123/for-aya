@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 
 interface Petal {
@@ -15,11 +15,22 @@ interface Petal {
 }
 
 export default function Petals({ count = 18 }: { count?: number }) {
+  const reduce = useReducedMotion();
   const [petals, setPetals] = useState<Petal[]>([]);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
+    if (reduce) {
+      setPetals([]);
+      return;
+    }
+    const isCoarse =
+      typeof window !== "undefined" &&
+      window.matchMedia("(pointer: coarse)").matches;
+    const effective = isCoarse ? Math.min(count, 10) : count;
+
     setPetals(
-      Array.from({ length: count }).map((_, i) => ({
+      Array.from({ length: effective }).map((_, i) => ({
         id: i,
         left: Math.random() * 100,
         delay: Math.random() * 8,
@@ -30,7 +41,15 @@ export default function Petals({ count = 18 }: { count?: number }) {
         hue: ["#C73E5A", "#E8A0A8", "#D4A24C", "#8B1E3F"][i % 4],
       }))
     );
-  }, [count]);
+  }, [count, reduce]);
+
+  useEffect(() => {
+    const onVisibility = () => setPaused(document.hidden);
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, []);
+
+  if (reduce) return null;
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
@@ -38,18 +57,22 @@ export default function Petals({ count = 18 }: { count?: number }) {
         <motion.div
           key={p.id}
           className="petal"
-          style={{ left: `${p.left}%`, top: -30 }}
+          style={{ left: `${p.left}%`, top: -30, animationPlayState: paused ? "paused" : "running" }}
           initial={{ y: -50, x: 0, rotate: p.rotate, opacity: 0 }}
-          animate={{
-            y: ["-5vh", "110vh"],
-            x: [0, p.drift, -p.drift / 2, p.drift / 3],
-            rotate: [p.rotate, p.rotate + 360],
-            opacity: [0, 0.85, 0.85, 0],
-          }}
+          animate={
+            paused
+              ? { opacity: 0 }
+              : {
+                  y: ["-5vh", "110vh"],
+                  x: [0, p.drift, -p.drift / 2, p.drift / 3],
+                  rotate: [p.rotate, p.rotate + 360],
+                  opacity: [0, 0.85, 0.85, 0],
+                }
+          }
           transition={{
             duration: p.duration,
             delay: p.delay,
-            repeat: Infinity,
+            repeat: paused ? 0 : Infinity,
             ease: "linear",
           }}
         >

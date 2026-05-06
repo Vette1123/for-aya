@@ -49,7 +49,7 @@ export default function Letter() {
           <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-gold/60" />
           <div className="absolute -bottom-3 -left-3 w-6 h-6 border-b-2 border-l-2 border-gold/60" />
 
-          <div className="font-hand text-xl md:text-2xl leading-[2.4] text-cream/90 space-y-1">
+          <div className="font-hand text-xl md:text-2xl leading-[2.6] text-cream/90 space-y-1">
             {lines.map((line, i) => (
               <motion.p
                 key={i}
@@ -57,7 +57,15 @@ export default function Letter() {
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.7, delay: i * 0.12 }}
-                className={i === 0 ? "text-gold text-2xl md:text-3xl mb-4" : i === lines.length - 1 ? "text-rose-soft mt-6 italic" : ""}
+                className={
+                  i === 0
+                    ? "text-gold text-2xl md:text-3xl mb-4"
+                    : i === 1
+                    ? "drop-cap"
+                    : i === lines.length - 1
+                    ? "text-rose-soft mt-6 italic"
+                    : ""
+                }
               >
                 {line}
               </motion.p>

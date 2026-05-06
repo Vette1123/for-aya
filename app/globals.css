@@ -75,6 +75,8 @@ body::after {
 
 @media (prefers-reduced-motion: reduce) {
   body::after { animation: none; }
+  .heartbeat { animation: none; }
+  .shimmer-text { animation: none; }
 }
 
 /* Subtle film grain */
@@ -142,4 +144,16 @@ body::before {
   position: absolute;
   pointer-events: none;
   user-select: none;
+}
+
+/* Drop cap for prose */
+.drop-cap::first-letter {
+  font-family: var(--font-display, serif);
+  font-size: 3.4em;
+  line-height: 0.9;
+  float: right;
+  margin-left: 0.18em;
+  margin-top: 0.05em;
+  color: var(--gold);
+  text-shadow: 0 2px 10px rgba(212, 162, 76, 0.35);
 }

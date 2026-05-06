@@ -131,7 +131,7 @@ export default function Timeline() {
                     whileInView={{ scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2, type: "spring" }}
-                    className={`relative w-28 h-28 rounded-full flex flex-col items-center justify-center text-center backdrop-blur-md ${
+                    className={`relative w-24 h-24 md:w-28 md:h-28 rounded-full flex flex-col items-center justify-center text-center backdrop-blur-md ${
                       m.isFuture
                         ? "bg-gradient-to-br from-gold/30 to-rose-warm/30 border-2 border-gold"
                         : "bg-gradient-to-br from-rose-deep to-rose-warm border border-gold/50"

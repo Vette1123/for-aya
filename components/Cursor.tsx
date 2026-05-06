@@ -1,9 +1,10 @@
 "use client";
 
-import { motion, useMotionValue, useSpring } from "motion/react";
+import { motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
 import { useEffect } from "react";
 
 export default function Cursor() {
+  const reduce = useReducedMotion();
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
   const x = useSpring(mouseX, { damping: 20, stiffness: 200 });
@@ -11,6 +12,7 @@ export default function Cursor() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (reduce) return;
     if (window.matchMedia("(pointer: coarse)").matches) return;
     const handle = (e: MouseEvent) => {
       mouseX.set(e.clientX - 12);
@@ -18,7 +20,9 @@ export default function Cursor() {
     };
     window.addEventListener("mousemove", handle);
     return () => window.removeEventListener("mousemove", handle);
-  }, [mouseX, mouseY]);
+  }, [mouseX, mouseY, reduce]);
+
+  if (reduce) return null;
 
   return (
     <motion.div

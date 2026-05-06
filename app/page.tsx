@@ -4,14 +4,12 @@ import Letter from "@/components/Letter";
 import Timeline from "@/components/Timeline";
 import HeartGame from "@/components/HeartGame";
 import Footer from "@/components/Footer";
-import Petals from "@/components/Petals";
-import Cursor from "@/components/Cursor";
+import ClientFx from "@/components/ClientFx";
 
 export default function Page() {
   return (
     <main className="relative">
-      <Petals count={20} />
-      <Cursor />
+      <ClientFx />
       <div className="relative z-10">
         <Hero />
         <Reasons />

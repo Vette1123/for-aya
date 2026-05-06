@@ -41,6 +41,10 @@ export default function HeartGame() {
     setCount((c) => c + 1);
     setWord(sweetWords[Math.floor(Math.random() * sweetWords.length)]);
 
+    if (typeof navigator !== "undefined" && "vibrate" in navigator) {
+      navigator.vibrate?.([10, 30, 15]);
+    }
+
     setTimeout(() => {
       setHearts((h) => h.filter((heart) => !newHearts.find((nh) => nh.id === heart.id)));
     }, 2000);
