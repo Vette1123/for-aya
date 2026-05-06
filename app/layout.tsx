@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Amiri, Tajawal, Reem_Kufi } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const display = Reem_Kufi({
@@ -51,7 +53,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ar" dir="rtl" className={`${display.variable} ${body.variable} ${hand.variable}`}>
-      <body className="font-body antialiased">{children}</body>
+      <body className="font-body antialiased">
+        {children}
+        <Analytics />
+        <SpeedInsights />
+      </body>
     </html>
   );
 }
