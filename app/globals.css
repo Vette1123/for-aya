@@ -23,13 +23,20 @@ body {
   overflow-x: hidden;
 }
 
-body {
+/* Fixed gradient layer — avoids `background-attachment: fixed`,
+   which on mobile (iOS Safari, Chrome) leaves black bands when the
+   URL bar collapses during scroll. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background:
     radial-gradient(ellipse 80% 60% at 50% 0%, rgba(199, 62, 90, 0.35), transparent 60%),
     radial-gradient(ellipse 60% 50% at 100% 80%, rgba(212, 162, 76, 0.18), transparent 60%),
     radial-gradient(ellipse 70% 55% at 0% 100%, rgba(139, 30, 63, 0.4), transparent 60%),
     linear-gradient(180deg, #1a0612 0%, #2a0e1a 50%, #1a0612 100%);
-  background-attachment: fixed;
 }
 
 /* Subtle film grain */
