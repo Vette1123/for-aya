@@ -85,6 +85,78 @@ body::after {
   body::after { animation: none; }
 }
 
+/* Ambient light orbs — soft drifting glows.
+   Transform-based (not background-position), so they stay cheap and,
+   unlike the gradient drift above, run smoothly on mobile too. */
+.aura {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  will-change: transform, opacity;
+  mix-blend-mode: screen;
+}
+.orb-a {
+  width: 46vmax;
+  height: 46vmax;
+  top: -12%;
+  right: -8%;
+  background: radial-gradient(circle, rgba(212, 162, 76, 0.5) 0%, transparent 70%);
+  animation: orb-drift-a 26s ease-in-out infinite alternate;
+}
+.orb-b {
+  width: 52vmax;
+  height: 52vmax;
+  bottom: -18%;
+  left: -12%;
+  background: radial-gradient(circle, rgba(199, 62, 90, 0.42) 0%, transparent 70%);
+  animation: orb-drift-b 32s ease-in-out infinite alternate;
+}
+.orb-c {
+  width: 34vmax;
+  height: 34vmax;
+  top: 38%;
+  left: 30%;
+  background: radial-gradient(circle, rgba(232, 160, 168, 0.3) 0%, transparent 70%);
+  animation: orb-drift-c 38s ease-in-out infinite alternate;
+}
+@keyframes orb-drift-a {
+  0%   { transform: translate3d(0, 0, 0) scale(1); opacity: 0.55; }
+  100% { transform: translate3d(-8vw, 6vh, 0) scale(1.15); opacity: 0.8; }
+}
+@keyframes orb-drift-b {
+  0%   { transform: translate3d(0, 0, 0) scale(1.1); opacity: 0.5; }
+  100% { transform: translate3d(7vw, -5vh, 0) scale(0.9); opacity: 0.75; }
+}
+@keyframes orb-drift-c {
+  0%   { transform: translate3d(0, 0, 0) scale(0.9); opacity: 0.35; }
+  50%  { opacity: 0.6; }
+  100% { transform: translate3d(6vw, 8vh, 0) scale(1.2); opacity: 0.4; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .orb { animation: none !important; }
+}
+
+/* Cinematic vignette — deepens the edges, pulls the eye to center.
+   Sits above the ambient layers, below the content (z-10). */
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 95% 80% at 50% 42%,
+    transparent 40%,
+    rgba(26, 6, 18, 0.5) 100%
+  );
+}
+
 /* Subtle film grain */
 body::before {
   content: "";

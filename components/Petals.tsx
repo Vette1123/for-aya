@@ -76,7 +76,13 @@ export default function Petals({ count = 18 }: { count?: number }) {
             ease: "linear",
           }}
         >
-          <svg width={p.size} height={p.size} viewBox="0 0 24 24" fill={p.hue}>
+          <svg
+            width={p.size}
+            height={p.size}
+            viewBox="0 0 24 24"
+            fill={p.hue}
+            style={{ filter: `drop-shadow(0 0 5px ${p.hue}88)` }}
+          >
             <path d="M12 2 C 14 8, 20 10, 12 22 C 4 10, 10 8, 12 2 Z" />
           </svg>
         </motion.div>
