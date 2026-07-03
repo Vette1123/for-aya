@@ -8,7 +8,7 @@ const Cursor = dynamic(() => import("@/components/Cursor"), { ssr: false });
 export default function ClientFx() {
   return (
     <>
-      <Petals count={20} />
+      <Petals count={16} />
       <Cursor />
     </>
   );

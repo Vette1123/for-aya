@@ -66,49 +66,50 @@ body::after {
   pointer-events: none;
   overflow: hidden;
 }
+/* No blur filter: the radial gradient (color -> transparent) is already
+   soft, so a blur on a 50vmax layer would be pure wasted GPU fillrate.
+   Motion is translate only (cheapest compositor op) — no scale, which
+   would force a large layer to recomposite. */
 .orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(55px);
   will-change: transform;
-  contain: strict;
 }
 .orb-a {
   width: 46vmax;
   height: 46vmax;
   top: -12%;
   right: -8%;
-  background: radial-gradient(circle, rgba(212, 162, 76, 0.5) 0%, transparent 70%);
-  animation: orb-drift-a 26s ease-in-out infinite alternate;
+  background: radial-gradient(circle, rgba(212, 162, 76, 0.4) 0%, transparent 72%);
+  animation: orb-drift-a 30s ease-in-out infinite alternate;
 }
 .orb-b {
   width: 52vmax;
   height: 52vmax;
   bottom: -18%;
   left: -12%;
-  background: radial-gradient(circle, rgba(199, 62, 90, 0.42) 0%, transparent 70%);
-  animation: orb-drift-b 32s ease-in-out infinite alternate;
+  background: radial-gradient(circle, rgba(199, 62, 90, 0.34) 0%, transparent 72%);
+  animation: orb-drift-b 36s ease-in-out infinite alternate;
 }
 .orb-c {
   width: 34vmax;
   height: 34vmax;
   top: 38%;
   left: 30%;
-  background: radial-gradient(circle, rgba(232, 160, 168, 0.3) 0%, transparent 70%);
-  animation: orb-drift-c 38s ease-in-out infinite alternate;
+  background: radial-gradient(circle, rgba(232, 160, 168, 0.24) 0%, transparent 74%);
+  animation: orb-drift-c 42s ease-in-out infinite alternate;
 }
 @keyframes orb-drift-a {
-  0%   { transform: translate3d(0, 0, 0) scale(1); opacity: 0.55; }
-  100% { transform: translate3d(-8vw, 6vh, 0) scale(1.15); opacity: 0.8; }
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-6vw, 5vh, 0); }
 }
 @keyframes orb-drift-b {
-  0%   { transform: translate3d(0, 0, 0) scale(1.1); opacity: 0.5; }
-  100% { transform: translate3d(7vw, -5vh, 0) scale(0.9); opacity: 0.75; }
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(6vw, -4vh, 0); }
 }
 @keyframes orb-drift-c {
-  0%   { transform: translate3d(0, 0, 0) scale(0.9); opacity: 0.35; }
-  50%  { opacity: 0.6; }
-  100% { transform: translate3d(6vw, 8vh, 0) scale(1.2); opacity: 0.4; }
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(5vw, 6vh, 0); }
 }
 @media (prefers-reduced-motion: reduce) {
   .orb { animation: none !important; }
@@ -188,11 +189,27 @@ body::before {
 /* Selection */
 ::selection { background: var(--rose-warm); color: var(--cream); }
 
-/* Floating petals base */
+/* Floating petals — CSS-driven so the fall runs on the compositor
+   thread, not per-frame JS on the main thread (matters on slow devices).
+   Per-petal variation comes from inline custom properties. */
 .petal {
   position: absolute;
+  top: 0;
   pointer-events: none;
   user-select: none;
+  will-change: transform;
+  opacity: 0;
+  animation: petal-fall var(--dur, 16s) linear var(--delay, 0s) infinite;
+}
+@keyframes petal-fall {
+  0%   { transform: translate3d(0, -12vh, 0) rotate(0deg); opacity: 0; }
+  8%   { opacity: 0.85; }
+  92%  { opacity: 0.85; }
+  100% { transform: translate3d(var(--drift, 0), 112vh, 0) rotate(var(--spin, 360deg)); opacity: 0; }
+}
+.petals-paused .petal { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .petal { animation: none; opacity: 0; }
 }
 
 /* Heart pattern background — static tint layer.
