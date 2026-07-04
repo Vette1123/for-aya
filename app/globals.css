@@ -33,7 +33,7 @@ body {
 body::after {
   content: "";
   position: fixed;
-  inset: -10%;
+  inset: -18%;
   z-index: -1;
   pointer-events: none;
   background:
@@ -64,10 +64,10 @@ body::after {
    unlike the gradient drift above, run smoothly on mobile too. */
 .aura {
   position: fixed;
-  /* Overscan past the viewport so the layer still covers the band that
-     mobile reveals when the URL bar collapses — matches body::after's -10%,
-     avoiding a hard tonal seam mid-screen. */
-  inset: -12%;
+  /* Overscan past the viewport (all sides) so the layer covers the band the
+     mobile URL bar exposes on scroll — down AND up. Matches body::after so no
+     layer's edge draws a hard tonal seam in any URL-bar state. */
+  inset: -18%;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
@@ -126,9 +126,9 @@ body::after {
 .vignette {
   position: fixed;
   /* Overscanned like .aura — the vignette darkening must extend past the
-     viewport, or its bottom edge draws a straight seam when the mobile URL
-     bar collapses and exposes the band below it. */
-  inset: -12%;
+     viewport on all sides, or an edge draws a straight seam when the mobile
+     URL bar shows/hides and exposes the band beyond it. */
+  inset: -18%;
   z-index: 1;
   pointer-events: none;
   background: radial-gradient(
@@ -142,7 +142,7 @@ body::after {
 body::before {
   content: "";
   position: fixed;
-  inset: -12%;
+  inset: -18%;
   pointer-events: none;
   z-index: 100;
   opacity: 0.06;
@@ -226,9 +226,11 @@ body::before {
    full-screen recomposite every frame, so it holds a fixed opacity. */
 .heart-pattern-anim {
   opacity: 0.09;
-  /* Override Tailwind inset-0's bottom so the tiled hearts overscan too —
-     otherwise the tint stops short of the URL-bar band on mobile. */
-  bottom: -12%;
+  /* Override Tailwind inset-0's top/bottom so the tiled hearts overscan on
+     both edges — the tint must not stop short of the URL-bar band, whether
+     it appears at the bottom (scroll down) or the top (scroll up). */
+  top: -18%;
+  bottom: -18%;
 }
 
 /* Drop cap for prose */
