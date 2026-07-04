@@ -18,9 +18,15 @@
 
 html,
 body {
-  background: var(--bg);
+  /* Match the gradient's darkest bottom stop, not a flat purple — so any
+     strip revealed by mobile rubber-band overscroll or a collapsing URL bar
+     blends in instead of flashing a "block" behind the fixed layers. */
+  background: #2a0d1c;
   color: var(--cream);
   overflow-x: hidden;
+  /* Stop the elastic overscroll that pulls content past the fixed bg and
+     exposes the canvas underneath at the bottom on mobile. */
+  overscroll-behavior-y: none;
 }
 
 /* Fixed gradient layer — avoids `background-attachment: fixed`,
