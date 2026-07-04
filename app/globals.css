@@ -24,9 +24,6 @@ body {
   background: #2a0d1c;
   color: var(--cream);
   overflow-x: hidden;
-  /* Stop the elastic overscroll that pulls content past the fixed bg and
-     exposes the canvas underneath at the bottom on mobile. */
-  overscroll-behavior-y: none;
 }
 
 /* Fixed gradient layer — avoids `background-attachment: fixed`,
