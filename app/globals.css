@@ -64,7 +64,10 @@ body::after {
    unlike the gradient drift above, run smoothly on mobile too. */
 .aura {
   position: fixed;
-  inset: 0;
+  /* Overscan past the viewport so the layer still covers the band that
+     mobile reveals when the URL bar collapses — matches body::after's -10%,
+     avoiding a hard tonal seam mid-screen. */
+  inset: -12%;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
@@ -122,7 +125,10 @@ body::after {
    Sits above the ambient layers, below the content (z-10). */
 .vignette {
   position: fixed;
-  inset: 0;
+  /* Overscanned like .aura — the vignette darkening must extend past the
+     viewport, or its bottom edge draws a straight seam when the mobile URL
+     bar collapses and exposes the band below it. */
+  inset: -12%;
   z-index: 1;
   pointer-events: none;
   background: radial-gradient(
@@ -136,7 +142,7 @@ body::after {
 body::before {
   content: "";
   position: fixed;
-  inset: 0;
+  inset: -12%;
   pointer-events: none;
   z-index: 100;
   opacity: 0.06;
@@ -220,6 +226,9 @@ body::before {
    full-screen recomposite every frame, so it holds a fixed opacity. */
 .heart-pattern-anim {
   opacity: 0.09;
+  /* Override Tailwind inset-0's bottom so the tiled hearts overscan too —
+     otherwise the tint stops short of the URL-bar band on mobile. */
+  bottom: -12%;
 }
 
 /* Drop cap for prose */
